@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  # Base Docker image used to run all containers
+  base:
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+
+  test:
+    image: transferinstructionsexercise_base:latest
+    command: 'npm run test'
+    network_mode: "host"
+    volumes:
+      - .:/transfer-instructions-exercise
+      - /transfer-instructions-exercise/node_modules
+  testwatch:
+    image: transferinstructionsexercise_base:latest
+    command: 'npm run test:watch'
+    network_mode: "host"
+    volumes:
+      - .:/transfer-instructions-exercise
+      - /transfer-instructions-exercise/node_modules
+
+  # Start a Node.js console
+  console:
+    image: transferinstructionsexercise_base:latest
+    command: 'node'
+    network_mode: "host"
+    volumes:
+      - .:/transfer-instructions-exercise
+      - /transfer-instructions-exercise/node_modules
+
+  # Run bash in Docker environment
+  bash:
+    image: transferinstructionsexercise_base:latest
+    command: '/bin/bash'
+    network_mode: "host"
+    volumes:
+      - .:/transfer-instructions-exercise
+      - /transfer-instructions-exercise/node_modules
